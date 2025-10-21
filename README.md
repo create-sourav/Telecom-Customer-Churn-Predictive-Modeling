@@ -141,4 +141,11 @@ By acting on churn predictions and customer insights, telecom companies can:
 
 ---
 
+### 🏁 Business Application
 
+**Use probabilities to segment customers:**
+- `P(Churned) ≥ 0.40` → **High-risk segment**
+- `0.25 ≤ P(Churned) < 0.40` → **Medium-risk**
+- `< 0.25` → **Safe**
+
+**Target high-risk users** with loyalty offers, discounts, or service upgrades.
