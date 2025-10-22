@@ -1,58 +1,165 @@
-# 📊 Telecom Customer Churn Analysis
+# 📘 Telecom Customer Churn Prediction — End-to-End Analysis (EDA + Machine Learning)
 
-## 🧭 Project Overview
+## 🧠 Project Overview
 
-This project analyzes telecom customer data to uncover key factors influencing **customer churn** and builds a **machine learning model** to predict whether a customer will **Stay**, **Churn**, or **Join**.
+This project focuses on understanding and predicting **customer churn** in a telecom company using data analytics and machine learning techniques. The goal is to identify **key drivers of churn**, understand **customer behavior patterns**, and **predict high-risk customers** to help the business improve retention.
 
-It combines **Exploratory Data Analysis (EDA)** with **predictive modeling** (Random Forest, Logistic Regression, Decision Tree, Naive Bayes) to provide actionable business insights.
+The project combines:
+
+* 📊 **Exploratory Data Analysis (EDA)** for insights and trends
+* 🤖 **Machine Learning (Random Forest Classifier)** for churn prediction
+* 🎨 **Visualizations (Power BI + Python)** for business storytelling
 
 ---
 
-## 🧰 Tech Stack
+## 🧾 Table of Contents
 
-- **Language:** Python
-- **Libraries:** pandas, numpy, matplotlib, seaborn, scikit-learn, imblearn
-- **Environment:** Jupyter Notebook / Google Colab
+1. [Dataset Overview](#dataset-overview)
+2. [EDA: Exploratory Data Analysis](#eda-exploratory-data-analysis)
+3. [Power BI Dashboard](#power-bi-dashboard)
+4. [Machine Learning Pipeline](#machine-learning-pipeline)
+5. [Model Performance](#model-performance)
+6. [Model Visualizations](#model-visualizations)
+7. [Key Insights](#key-insights)
+8. [Business Application](#business-application)
+9. [Tools & Technologies](#tools--technologies)
+10. [Project Files](#project-files)
+11. [Conclusion](#conclusion)
 
 ---
 
 ## 📂 Dataset Overview
 
-**Records:** 7043  
-**Target Column:** `Customer Status` → { Stayed | Churned | Joined }
+* **Dataset Name:** Telecom Customer Churn Dataset
+* **Records:** ~7,000 customers
+* **Target Variable:** `Customer Status` — {Stayed, Churned, Joined}
+* **Objective:** Predict which customers are most likely to churn
 
-| Feature Type | Examples |
-|---------------|-----------|
-| Demographic | Gender · Age · Married · Dependents |
-| Account Info | Tenure · Contract · Payment Method · Paperless Billing |
-| Services | Internet Type · Online Backup · Device Protection |
-| Financial | Monthly Charge · Total Charges · Total Revenue |
+**Key Features:**
 
----
-
-## 🧼 Data Pre-Processing
-
-1️⃣ Removed irrelevant columns (`Latitude`, `Longitude`, `Zip Code`, `City`, `Churn Reason`, `Churn Category`).  
-2️⃣ Filled missing values (mode for categorical, median for numeric).  
-3️⃣ Converted categorical features via `pd.get_dummies()`.  
-4️⃣ Encoded `Customer Status` with `LabelEncoder`.  
-5️⃣ Scaled numerical columns using `StandardScaler`.  
-6️⃣ Handled class imbalance with `SMOTE`.
+* Demographics (Gender, Age, Dependents)
+* Services (Internet Type, Security, Backup, Tech Support)
+* Billing (Contract Type, Payment Method, Paperless Billing)
+* Financials (Monthly Charges, Total Charges)
+* Tenure (Months with the company)
 
 ---
 
-## 📈 Exploratory Data Analysis (EDA)
+## 🔍 EDA: Exploratory Data Analysis
 
-### 🔹 Churn by Contract Type
+### 🧹 Data Cleaning & Preparation
 
-The visualization below shows that customers on **month-to-month contracts** have the highest churn rates, while those on **1-year** and **2-year** contracts are much more likely to stay.
+* Removed irrelevant columns: `Churn Reason`, `Churn Category`.
+* Handled missing values — categorical: filled with **mode**, numeric: filled with **median**.
+* Renamed columns and standardized column names.
+* Created derived metrics: **Churn Rate**, **Total Revenue Lost**, **Monthly Revenue Lost**.
 
-Encouraging long-term contracts helps reduce churn significantly.
+### 📊 Key Observations from EDA
 
-![Churn by Contract Type](./contract%20type.png)
+1. **Churn Distribution:** About 26% of customers have churned.
+2. **Contract Type:** Month-to-Month contracts show the highest churn (>40%).
+3. **Tenure:** Churn rate decreases steadily with longer tenure.
+4. **Internet Type:** Fiber optic users are more likely to churn than DSL users.
+5. **Billing & Payment:** Paperless billing and electronic payment methods are linked to higher churn.
+
+📸 **Power BI Dashboard Visualization:**
+
+![POWER\_BI\_DASHBOARD](POWER_BI_DASHBOARD.png)
+
+### 💰 Insights from Dashboard
+
+* **Total Revenue Lost:** 2.86M
+* **Total Churned Customers:** 1,869
+* **Total Monthly Revenue Lost:** 137.09K
+* Churn rate trends are shown by **Tenure**, **Contract Type**, and **Internet Type**.
+* Dynamic slicers available for demographic and service-level analysis.
 
 ---
 
+## 🤖 Machine Learning Pipeline
+
+### ⚙️ Step 1: Data Preprocessing
+
+| Step                     | Description                                                                      |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| **1. Feature Encoding**  | Applied `pd.get_dummies()` for categorical variables                             |
+| **2. Target Encoding**   | Used `LabelEncoder` on `Customer Status` → {Stayed, Churned, Joined} → {0, 1, 2} |
+| **3. Scaling**           | Standardized numeric features using `StandardScaler`                             |
+| **4. Balancing Classes** | Handled imbalance using `SMOTE`                                                  |
+| **5. Train-Test Split**  | 80% train, 20% test with stratification                                          |
+
+### 🧩 Step 2: Model Training
+
+Trained multiple algorithms to compare performance:
+
+* **Random Forest Classifier** *(Best Performer)*
+* Logistic Regression
+* Decision Tree
+* Naive Bayes
+
+#### Tuned Random Forest Configuration
+
+```python
+RandomForestClassifier(
+    n_estimators=300,
+    max_depth=15,
+    min_samples_split=10,
+    min_samples_leaf=5,
+    class_weight='balanced',
+    random_state=0
+)
+```
+
+---
+
+## 📈 Model Performance
+
+| Metric                    | Before Tuning      | After Tuning |
+| ------------------------- | ------------------ | ------------ |
+| **Train Accuracy**        | 1.000 (Overfitted) | **0.863**    |
+| **Test Accuracy**         | 0.833              | **0.803**    |
+| **ROC-AUC (Multi-Class)** | 0.880              | **0.892**    |
+| **Optimal Threshold**     | -                  | **0.358**    |
+
+✅ **Interpretation:**
+
+* Fine-tuning reduced overfitting while improving generalization.
+* The model shows strong performance with **AUC = 0.892**, indicating excellent class separability.
+* The optimal churn probability threshold (0.358) balances sensitivity and specificity.
+
+---
+
+## 📊 Model Visualizations
+
+### 1️⃣ Churn Probability Distribution
+
+Displays predicted churn probability for each customer class (Stayed, Churned, Joined). The vertical red line (0.358) marks the optimal threshold.
+
+📸 **Probability Distribution Plot:**
+
+![Probability Distribution](Probability_distribution.png)
+
+### 2️⃣ ROC Curve — Random Forest Model
+
+Demonstrates model performance with **AUC = 0.89**. The red point marks the optimal threshold (0.36).
+
+📸 **ROC Curve Visualization:**
+
+![ROC Curve](ROC_Curve.png)
+
+---
+
+## 🔍 Key Insights from Machine Learning
+
+- **Tenure**, **Monthly Charges**, and **Contract Type** are the top predictors of churn.
+- Customers with **fiber-optic internet**, **paperless billing**, and **month-to-month contracts** have higher churn probabilities.
+- **Auto-pay customers** are more loyal and less likely to leave.
+- About **20–25%** of the customer base falls into the **high-risk churn** segment (probability ≥ 0.358).
+- **Long-term contracts** (1-2 years) significantly improve retention
+- **Tenure** and **total charges** are strong predictors of customer loyalty
+- **Service bundling** (multiple lines, streaming) increases customer stickiness
+- **High monthly charges** correlate with increased churn probability
+---
 ### 🔹 Top 10 Most Important Features That Cause Churn
 
 These features have the greatest influence on predicting customer churn and retention:
@@ -72,80 +179,63 @@ These features have the greatest influence on predicting customer churn and rete
 | 9️⃣ | Married | Married customers churn less |
 | 🔟 | Streaming TV | Bundled services increase loyalty |
 
----
+-------
+## 🧭 Business Application
 
-## 🤖 Machine Learning Pipeline
+| Segment         | Probability Range | Action Plan                                         |
+| --------------- | ----------------- | --------------------------------------------------- |
+| **High Risk**   | ≥ 0.36            | Immediate retention offers & personalized follow-up |
+| **Medium Risk** | 0.25 – 0.36       | Improve service, strengthen loyalty programs        |
+| **Safe**        | < 0.25            | Continue engagement through routine campaigns       |
 
-| Step | Description |
-|------|--------------|
-| **1️⃣** | Encoding features and target |
-| **2️⃣** | Train/test split (80 / 20) |
-| **3️⃣** | Scaling numeric features |
-| **4️⃣** | Oversampling with SMOTE |
-| **5️⃣** | Model training (Random Forest, Logistic Regression, Decision Tree, Naive Bayes) |
-| **6️⃣** | Evaluation (Accuracy, Recall, F1) |
-| **7️⃣** | Feature importance visualization |
-
----
-
-## 🧠 Model Performance Summary
-
-| Model | Accuracy | Weighted Recall | Weighted F1 |
-|--------|-----------|----------------|--------------|
-| **Random Forest** | ≈ 84% | 0.84 | 0.83 |
-| Logistic Regression | ≈ 77% | 0.78 | 0.74 |
-| Decision Tree | ≈ 81% | 0.81 | 0.81 |
-| Naive Bayes | ≈ 12% | 0.12 | 0.06 |
-
-✅ **Best Model:** Tuned Random Forest Classifier
-```python
-RandomForestClassifier(
-    n_estimators=300,
-    max_depth=15,
-    min_samples_split=10,
-    min_samples_leaf=5,
-    class_weight='balanced',
-    random_state=0
-)
-```
+* **Deploy model monthly** to predict churn trends.
+* Integrate predictions into **Power BI dashboards** for real-time insights.
+* Enable marketing and customer success teams to focus on high-value retention.
 
 ---
 
-## 🧮 Confusion Matrix — Random Forest
+## 🧰 Tools & Technologies
 
-The confusion matrix shows that the model performs best for "Stayed" customers, with slight overlap between "Churned" and "Joined."
+| Category                | Tools Used                             |
+| ----------------------- | -------------------------------------- |
+| **EDA & Data Cleaning** | Python (Pandas, NumPy)                 |
+| **Visualization**       | Matplotlib, Seaborn, Power BI          |
+| **Modeling**            | scikit-learn, imbalanced-learn (SMOTE) |
+| **Deployment**          | Power BI, Excel, Pickle (.pkl model)   |
 
-![Confusion Matrix](./Screenshot%202025-10-21%20213427.png)
 ---
 
-## 🏁 Conclusion
+## 📁 Project Files
 
+| File Name                               | Description                               |
+| --------------------------------------- | ----------------------------------------- |
+| `Teleco_Chustomer_Churn_Analysis.ipynb` | Google Colab Notebook containing EDA & ML code |
+| `teleco_churn_data.xlsx`                |  dataset                           |
+| `POWER_BI_DASHBOARD.png`                | Power BI visualization screenshot         |
+| `Probability_distribution.png`          | Churn probability density plot            |
+| `ROC_Curve.png`                         | ROC curve for tuned Random Forest model   |
+| `README.md`                             | Documentation file                        |
+
+---
+
+## 🧾 Conclusion
+
+✅ **Final Model:** Random Forest Classifier
+✅ **Test Accuracy:** 80.3%
+✅ **AUC:** 0.892
+✅ **Optimal Threshold:** 0.358
+
+The model successfully predicts customer churn probability and provides actionable business insights.
+When integrated with Power BI dashboards, it delivers a complete **data-to-decision solution** for customer retention.
 This end-to-end Telecom Customer Churn Analysis project demonstrates how EDA and Machine Learning can predict churn and identify the key drivers of customer retention.
 
 By acting on churn predictions and customer insights, telecom companies can:
-
 - Reduce churn by 20–30%
 - Increase customer lifetime value
 - Optimize marketing and retention strategies
 
 ---
 
-
-## 📊 Key Insights
-
-- **Month-to-month contracts** are the biggest churn risk factor
-- **Long-term contracts** (1-2 years) significantly improve retention
-- **Tenure** and **total charges** are strong predictors of customer loyalty
-- **Service bundling** (multiple lines, streaming) increases customer stickiness
-- **High monthly charges** correlate with increased churn probability
-
----
-
-### 🏁 Business Application
-
-**Use probabilities to segment customers:**
-- `P(Churned) ≥ 0.40` → **High-risk segment**
-- `0.25 ≤ P(Churned) < 0.40` → **Medium-risk**
-- `< 0.25` → **Safe**
-
-**Target high-risk users** with loyalty offers, discounts, or service upgrades.
+**Author:** Sourav Mondal, Email: souravmondal5f@gamil.com 
+**Tools:** Python | Power BI | Excel | SQL
+**Keywords:** Telecom, Churn Prediction, Machine Learning, Data Visualization, Customer Retention
