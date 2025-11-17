@@ -76,28 +76,45 @@ The project combines:
 
 ---
 
-## 🤖 Machine Learning Pipeline
 
-### ⚙️ Step 1: Data Preprocessing
 
-| Step                     | Description                                                                      |
-| ------------------------ | -------------------------------------------------------------------------------- |
-| **1. Feature Encoding**  | Applied `pd.get_dummies()` for categorical variables                             |
-| **2. Target Encoding**   | Used `LabelEncoder` on `Customer Status` → {Stayed, Churned, Joined} → {0, 1, 2} |
-| **3. Scaling**           | Standardized numeric features using `StandardScaler`                             |
-| **4. Balancing Classes** | Handled imbalance using `SMOTE`                                                  |
-| **5. Train-Test Split**  | 80% train, 20% test with stratification                                          |
+---
+## 🤖 Machine Learning Summary Steps  
 
-### 🧩 Step 2: Model Training
+## 🧠 Overview  
+Customer churn is one of the biggest profitability challenges in telecom. This project applies a **Random Forest Classifier** to predict which customers are most likely to **churn (attrite)**, combining **Python (scikit-learn)** for modeling and **Power BI** for business intelligence dashboards.
 
-Trained multiple algorithms to compare performance:
+---
 
-* **Random Forest Classifier** *(Best Performer)*
-* Logistic Regression
-* Decision Tree
-* Naive Bayes
+## ⚙️  Data Preprocessing
 
-#### Tuned Random Forest Configuration
+| Step | Description |
+|------|--------------|
+| **1.1 Data Cleaning** | Removed irrelevant columns (`Churn Reason`, `Churn Category`). |
+| **1.2 Missing Values** | Replaced missing categorical values with the **mode** and numerical values with the **median**. |
+| **1.3 Feature Encoding** | Used `pd.get_dummies()` for categorical variables. |
+| **1.4 Target Encoding** | Applied `LabelEncoder` to `Customer Status` → {Stayed, Churned, Joined} → {0, 1, 2}. |
+| **1.5 Train-Test Split** | 80% training / 20% testing with `stratify=y` for balanced classes. |
+| **1.6 Feature Scaling** | Standardized numeric columns with `StandardScaler`. |
+| **1.7 Imbalance Handling** | Balanced target classes using **SMOTE** (Synthetic Minority Oversampling Technique). |
+
+---
+
+## 🧩  Model Training
+
+| Model | Key Parameters | Purpose |
+|--------|----------------|----------|
+| **Random Forest (baseline)** | `class_weight='balanced', random_state=0` | Handles imbalance & non-linearity |
+| **Logistic Regression** | `max_iter=1000, random_state=0` | Linear benchmark |
+| **Decision Tree** | `random_state=0` | Interpretable baseline |
+| **Naive Bayes** | Default params | Probabilistic baseline |
+
+All models were trained on **resampled + scaled** data (`x_train_resample`, `y_train_resample`).
+
+---
+
+##  📊 Model Performance (Final Results)
+
 
 ```python
 RandomForestClassifier(
@@ -110,124 +127,89 @@ RandomForestClassifier(
 )
 ```
 
----
+**Performance:**
+- Train Accuracy: 0.951
+- Test Accuracy: 0.833
+- ROC-AUC: 0.936
+- Precision: 0.836
+- Recall: 0.833
+- F1 Score: 0.833
+- ROC AUC: 0.936
 
-## 📈 Model Performance
 
-| Metric                    | Before Tuning      | After Tuning |
-| ------------------------- | ------------------ | ------------ |
-| **Train Accuracy**        | 1.000 (Overfitted) | **0.863**    |
-| **Test Accuracy**         | 0.833              | **0.803**    |
-| **ROC-AUC (Multi-Class)** | 0.880              | **0.892**    |
-| **Optimal Threshold**     | -                  | **0.358**    |
+✅ **Interpretation**  
+- Fine-tuning improved **generalization** and reduced overfitting.  
+- **AUC = 0.936** shows strong discrimination across classes (*Stayed / Churned / Joined*).  
+- Balanced metrics confirm deployment-ready stability.
 
-✅ **Interpretation:**
-
-* Fine-tuning reduced overfitting while improving generalization.
-* The model shows strong performance with **AUC = 0.892**, indicating excellent class separability.
-* The optimal churn probability threshold (0.358) balances sensitivity and specificity.
-
----
-
-## 📊 Model Visualizations
-
-### 1️⃣ Churn Probability Distribution
-
-Displays predicted churn probability for each customer class (Stayed, Churned, Joined). The vertical red line (0.358) marks the optimal threshold.
-
-📸 **Probability Distribution Plot:**
-
-![Probability Distribution](Probability_distribution.png)
-
-### 2️⃣ ROC Curve — Random Forest Model
-
-Demonstrates model performance with **AUC = 0.89**. The red point marks the optimal threshold (0.36).
-
-📸 **ROC Curve Visualization:**
-
-![ROC Curve](ROC_Curve.png)
 
 ---
 
-## 🔍 Key Insights from Machine Learning
+## 📈 Model Insights
 
-- **Tenure**, **Monthly Charges**, and **Contract Type** are the top predictors of churn.
-- Customers with **fiber-optic internet**, **paperless billing**, and **month-to-month contracts** have higher churn probabilities.
-- **Auto-pay customers** are more loyal and less likely to leave.
-- About **20–25%** of the customer base falls into the **high-risk churn** segment (probability ≥ 0.358).
-- **Long-term contracts** (1-2 years) significantly improve retention
-- **Tenure** and **total charges** are strong predictors of customer loyalty
-- **Service bundling** (multiple lines, streaming) increases customer stickiness
-- **High monthly charges** correlate with increased churn probability
----
-### 🔹 Top 10 Most Important Features That Cause Churn
+### 🔹 Key Churn Drivers
 
-These features have the greatest influence on predicting customer churn and retention:
+- Tenure, billing type, and contract length drive churn risk.
+- Fiber-optic internet & paperless billing → higher churn probability.
+- Auto-pay + long-term contracts → better retention.
 
-![Top Features](./Screenshot%202025-10-21%20213419.png)
+### 🔹 Top 10 Feature Importances
 
-| Rank | Feature | Insight |
-|------|----------|----------|
-| 1️⃣ | Total Charges | High spenders tend to stay |
-| 2️⃣ | Total Revenue | Correlates with customer value |
-| 3️⃣ | Tenure in Months | Short tenure → higher churn |
-| 4️⃣ | Total Long Distance Charges | Reflects engagement |
-| 5️⃣ | Contract (Two Year) | Long contracts reduce churn |
-| 6️⃣ | Monthly Charge | High bills drive churn |
-| 7️⃣ | Contract (One Year) | Improves retention |
-| 8️⃣ | Multiple Lines | More services → higher retention |
-| 9️⃣ | Married | Married customers churn less |
-| 🔟 | Streaming TV | Bundled services increase loyalty |
-
--------
-## 🧭 Business Application
-
-| Segment         | Probability Range | Action Plan                                         |
-| --------------- | ----------------- | --------------------------------------------------- |
-| **High Risk**   | ≥ 0.36            | Immediate retention offers & personalized follow-up |
-| **Medium Risk** | 0.25 – 0.36       | Improve service, strengthen loyalty programs        |
-| **Safe**        | < 0.25            | Continue engagement through routine campaigns       |
-
-* **Deploy model monthly** to predict churn trends.
-* Integrate predictions into **Power BI dashboards** for real-time insights.
-* Enable marketing and customer success teams to focus on high-value retention.
+1. Tenure
+2. Monthly Charges
+3. Contract Type
+4. Internet Service
+5. Payment Method
+6. Paperless Billing
+7. Online Security
+8. Device Protection
+9. Dependents
+10. Tech Support
 
 ---
 
-## 🧰 Tools & Technologies
+## 📉  ROC Curve, Probability Distribution & Thresholds
 
-| Category                | Tools Used                             |
-| ----------------------- | -------------------------------------- |
-| **EDA & Data Cleaning** | Python (Pandas, NumPy)                 |
-| **Visualization**       | Matplotlib, Seaborn, Power BI          |
-| **Modeling**            | scikit-learn, imbalanced-learn (SMOTE) |
-| **Deployment**          | Power BI, Excel, Pickle (.pkl model)   |
+| Parameter | Value |
+|-----------|-------|
+| Optimal Churn Probability Threshold | 0.295 |
+| ROC-AUC Score | 0.936 |
 
----
-
-## 📁 Project Files
-
-| File Name                               | Description                               |
-| --------------------------------------- | ----------------------------------------- |
-| `Teleco_Chustomer_Churn_Analysis.ipynb` | Google Colab Notebook containing EDA & ML code |
-| `teleco_churn_data.xlsx`                |  dataset                           |
-| `POWER_BI_DASHBOARD.png`                | Power BI visualization screenshot         |
-| `Probability_distribution.png`          | Churn probability density plot            |
-| `ROC_Curve.png`                         | ROC curve for tuned Random Forest model   |
-| `README.md`                             | Documentation file                        |
+### 🧭 Interpretation
+- Customers with Churn Probability ≥ 0.295 are high-risk attriters.
+- The 0.295 threshold balances sensitivity (True Positive Rate) and specificity (1 – False Positive Rate).
+- ROC curve and probability distribution visuals confirm robust separation between churned and non-churned customers.
 
 ---
 
-## 🧾 Conclusion
+## 🏁  Business Application
 
-✅ **Final Model:** Random Forest Classifier
-✅ **Test Accuracy:** 80.3%
-✅ **AUC:** 0.892
-✅ **Optimal Threshold:** 0.358
+### 🎯 Deployment Strategy
+- Retrain and deploy monthly to detect emerging churn patterns.
+- Integrate predictions into Power BI dashboards for real-time business decisions.
 
-The model successfully predicts customer churn probability and provides actionable business insights.
-When integrated with Power BI dashboards, it delivers a complete **data-to-decision solution** for customer retention.
-This end-to-end Telecom Customer Churn Analysis project demonstrates how EDA and Machine Learning can predict churn and identify the key drivers of customer retention.
+### Customer Segmentation
+
+| Probability Range | Segment | Action |
+|-------------------|---------|--------|
+| P(Churned) ≥ 0.295 | High-Risk | Retention offers & personalized discounts |
+| 0.25 ≤ P(Churned) < 0.295 | Medium-Risk | Customer support & plan improvements |
+| < 0.25 | Safe | Regular loyalty programs & engagement |
+
+---
+
+##  Technical Stack
+- **Python** (scikit-learn, pandas, numpy)
+- **SMOTE** for imbalance handling
+- **Random Forest Classifier** (primary model)
+- **Power BI** for dashboards
+- **StandardScaler** for feature scaling
+- **LabelEncoder** for target encoding
+
+---
+
+## 📌 Project Status
+✅ **Production-Ready** — Model demonstrates balanced performance with strong generalization capabilities and is ready for deployment in real-world telecom churn prediction scenarios.
 
 By acting on churn predictions and customer insights, telecom companies can:
 - Reduce churn by 20–30%
