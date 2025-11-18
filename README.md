@@ -140,7 +140,7 @@ RandomForestClassifier(
 - Recall: 0.826
 - F1 Score: 0.826
   
-![distribution](dustribution.png)
+![distribution](distribution.png)
 
 ✅ **Interpretation**  
 - Fine-tuning improved **generalization** and reduced overfitting.  
