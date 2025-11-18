@@ -160,16 +160,16 @@ RandomForestClassifier(
 
 ### 🔹 Top 10 Feature Importances
 
-1. Tenure
-2. Monthly Charges
-3. Contract Type
-4. Internet Service
-5. Payment Method
-6. Paperless Billing
-7. Online Security
-8. Device Protection
-9. Dependents
-10. Tech Support
+1️⃣ Tenure in Months
+2️⃣ Total Revenue
+3️⃣ Total Charges
+4️⃣ Total Long Distance Charges
+5️⃣ Contract_Two Year
+6️⃣ Number of Referrals
+7️⃣ Monthly Charge
+8️⃣ Age
+9️⃣ Paperless Billing_Yes
+🔟 Payment Method_Credit Card
 
 ---
 
