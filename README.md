@@ -127,6 +127,11 @@ RandomForestClassifier(
 )
 ```
 
+### ROC Curve — Performance Evaluation
+![Roc](Roc.png)
+
+
+
 **Performance:**
 - Train Accuracy: 0.946
 - Test Accuracy: 0.826
