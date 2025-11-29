@@ -216,10 +216,7 @@ RandomForestClassifier(
 ## 📌 Project Status
 ✅ **Production-Ready** — Model demonstrates balanced performance with strong generalization capabilities and is ready for deployment in real-world telecom churn prediction scenarios.
 
-By acting on churn predictions and customer insights, telecom companies can:
-- Reduce churn by 20–30%
-- Increase customer lifetime value
-- Optimize marketing and retention strategies
+Leveraging the model’s identification of approximately 38% of customers as high-risk enables telecom companies to implement focused, data-driven retention initiatives. These targeted interventions can reduce overall churn by 20–30%, enhance customer lifetime value, and significantly improve the efficiency of marketing and retention strategies.
 
 ---
 
