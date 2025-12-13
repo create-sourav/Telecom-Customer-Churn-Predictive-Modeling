@@ -128,7 +128,7 @@ RandomForestClassifier(
 ```
 
 ### ROC Curve — Performance Evaluation
-![Roc](Roc.png)
+![Roc](roc.png)
 
 
 
