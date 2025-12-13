@@ -64,7 +64,7 @@ The project combines:
 
 📸 **Power BI Dashboard Visualization:**
 
-![POWER\_BI\_DASHBOARD](POWER_BI_DASHBOARD.png)
+![POWER\_BI\_DASHBOARD](powerbidash.png)
 
 ### 💰 Insights from Dashboard
 
