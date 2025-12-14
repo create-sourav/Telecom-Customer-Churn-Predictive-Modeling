@@ -135,16 +135,16 @@ RandomForestClassifier(
 **Performance:**
 - Train Accuracy: 0.946
 - Test Accuracy: 0.826
-- ROC-AUC: 0.936
+- ROC-AUC: 0.937
 - Precision: 0.83
-- Recall: 0.826
+- Recall: 0.824
 - F1 Score: 0.826
   
 ![distribution](distribution.png)
 
 ✅ **Interpretation**  
 - Fine-tuning improved **generalization** and reduced overfitting.  
-- **AUC = 0.936** shows strong discrimination across classes (*Stayed / Churned / Joined*).  
+- **AUC = 0.937** shows strong discrimination across classes (*Stayed / Churned / Joined*).  
 - Balanced metrics confirm deployment-ready stability.
 
 
@@ -181,8 +181,8 @@ RandomForestClassifier(
 | ROC-AUC Score | 0.936 |
 
 ### 🧭 Interpretation
-- Customers with Churn Probability ≥ 0.32 are high-risk attriters.
-- The 0.32 threshold balances sensitivity (True Positive Rate) and specificity (1 – False Positive Rate).
+- Customers with Churn Probability ≥ 0.30 are high-risk attriters.
+- The 0.30 threshold balances sensitivity (True Positive Rate) and specificity (1 – False Positive Rate).
 - ROC curve and probability distribution visuals confirm robust separation between churned and non-churned customers.
 
 ---
@@ -197,9 +197,9 @@ RandomForestClassifier(
 
 | Probability Range | Segment | Action |
 |-------------------|---------|--------|
-| P(Churned) ≥ 0.32 | High-Risk | Retention offers & personalized discounts |
-| 0.32 ≤ P(Churned) < 0.32 | Medium-Risk | Customer support & plan improvements |
-| < 0.32 | Safe | Regular loyalty programs & engagement |
+| P(Churned) ≥ 0.30 | High-Risk | Retention offers & personalized discounts |
+| 0.30 ≤ P(Churned) < 0.30 | Medium-Risk | Customer support & plan improvements |
+| < 0.30 | Safe | Regular loyalty programs & engagement |
 
 ---
 
