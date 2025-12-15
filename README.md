@@ -199,16 +199,27 @@ GradientBoostingClassifier(
 - Improves customer lifetime value and revenue stability
 
 ---
+## 📊 Power BI Dashboard
 
-## 🧰 Technical Stack
+The Power BI dashboard provides real-time insights into:
+Customer churn trends and patterns
+High-risk customer segments
+Revenue impact analysis
+Service-wise churn breakdown
+Actionable retention strategies
 
-- Python (pandas, numpy, scikit-learn)
-- Gradient Boosting Classifier
-- SMOTE
-- StandardScaler
-- LabelEncoder
-- SHAP (model explainability – binary churn interpretation)
-- Power BI
+
+🧰 Technical Stack
+
+Python (pandas, numpy, scikit-learn)
+Gradient Boosting Classifier
+SMOTE
+StandardScaler
+LabelEncoder
+SHAP (model explainability – binary churn interpretation)
+Power BI
+
+
 
 ---
 
