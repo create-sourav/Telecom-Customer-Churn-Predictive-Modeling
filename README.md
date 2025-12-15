@@ -211,13 +211,13 @@ GradientBoostingClassifier(
 
 🧰 Technical Stack
 
-Python (pandas, numpy, scikit-learn)
-Gradient Boosting Classifier
-SMOTE
-StandardScaler
-LabelEncoder
-SHAP (model explainability – binary churn interpretation)
-Power BI
+- Python (pandas, numpy, scikit-learn)
+- Gradient Boosting Classifier
+- SMOTE
+- StandardScaler
+- LabelEncoder
+- SHAP (model explainability – binary churn interpretation)
+- Power BI
 
 
 
