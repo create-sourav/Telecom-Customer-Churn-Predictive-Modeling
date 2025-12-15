@@ -201,12 +201,12 @@ GradientBoostingClassifier(
 ---
 ## 📊 Power BI Dashboard
 ![Power BI Dashboard](powerbidash.png)
-The Power BI dashboard provides real-time insights into:
-Customer churn trends and patterns
-High-risk customer segments
-Revenue impact analysis
-Service-wise churn breakdown
-Actionable retention strategies
+- The Power BI dashboard provides visual insights into:
+- Customer churn trends and patterns
+- High-risk customer segments
+- Revenue impact analysis
+- Service-wise churn breakdown
+- Actionable retention strategies
 
 
 🧰 Technical Stack
